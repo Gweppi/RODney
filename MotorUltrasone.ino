@@ -20,17 +20,24 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   int distance = sonar.ping_cm();
-  if (distance > 10 && distance != 0) {
-    Serial.println("DRIVE");
+  if (distance == 0) {
+    Serial.println("DRIVE 0");
     Serial.println(distance);
+    forward();
     setMotorSpeed(200);
-  } else {
-    Serial.println("STOP");
+    
+  } else if (distance > 10) {
+    Serial.println("DRIVE 10");
     Serial.println(distance);
-    stopMotors();
+    forward();
+    setMotorSpeed(200);
+    
+  } else {
+    Serial.println("TURN");
+    Serial.println(distance);
+    turnLeft();
   }
 
-//  setMotorSpeed(200);
   delay(100);
 }
 
@@ -68,18 +75,13 @@ void forward() {
 void turnLeft() {
   motor2.run(BACKWARD);
   motor3.run(FORWARD);
-
-  delay(2000);
-
-  motor2.run(FORWARD);
-  motor3.run(BACKWARD);
 }
 
 void turnRight() {
   motor1.run(FORWARD);
   motor4.run(BACKWARD);
 
-  delay(2000);
+  delay(5000);
 
   motor1.run(BACKWARD);
   motor4.run(FORWARD);
