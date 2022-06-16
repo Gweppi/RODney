@@ -8,6 +8,8 @@ AF_DCMotor motor4(4, MOTOR12_64KHZ);
 
 NewPing sonar (9, 10, 1000);
 
+int wasTurning = 0;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -21,18 +23,32 @@ void loop() {
 
   int distance = sonar.ping_cm();
   if (distance == 0) {
+    if (wasTurning == 1) {
+      turnLeft();
+      delay(1000);
+      wasTurning = 0;
+    }
+    
     Serial.println("DRIVE 0");
     Serial.println(distance);
     forward();
     setMotorSpeed(200);
     
-  } else if (distance > 10) {
+  } else if (distance > 15) {
+
+    if (wasTurning == 1) {
+      turnLeft();
+      delay(1000);
+      wasTurning = 0;
+    }
+    
     Serial.println("DRIVE 10");
     Serial.println(distance);
     forward();
     setMotorSpeed(200);
     
   } else {
+    wasTurning = 1;
     Serial.println("TURN");
     Serial.println(distance);
     turnLeft();
