@@ -20,7 +20,7 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   int distance = sonar.ping_cm();
-  if (distance > 10) {
+  if (distance > 10 && distance != 0) {
     Serial.println("DRIVE");
     Serial.println(distance);
     setMotorSpeed(200);
