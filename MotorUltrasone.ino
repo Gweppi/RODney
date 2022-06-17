@@ -25,7 +25,7 @@ void loop() {
   if (distance == 0) {
     if (wasTurning == 1) {
       turnLeft();
-      delay(1000);
+      delay(2000);
       wasTurning = 0;
     }
     
@@ -38,11 +38,11 @@ void loop() {
 
     if (wasTurning == 1) {
       turnLeft();
-      delay(1000);
+      delay(2000);
       wasTurning = 0;
     }
     
-    Serial.println("DRIVE 10");
+    Serial.println("DRIVE 15");
     Serial.println(distance);
     forward();
     setMotorSpeed(200);
@@ -96,9 +96,4 @@ void turnLeft() {
 void turnRight() {
   motor1.run(FORWARD);
   motor4.run(BACKWARD);
-
-  delay(5000);
-
-  motor1.run(BACKWARD);
-  motor4.run(FORWARD);
 }
