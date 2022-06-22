@@ -6,7 +6,7 @@ AF_DCMotor motor2(2, MOTOR12_64KHZ);
 AF_DCMotor motor3(3, MOTOR12_64KHZ);
 AF_DCMotor motor4(4, MOTOR12_64KHZ);
 
-NewPing sonar (9, 10, 1000);
+NewPing sonar (12, 13, 1000);
 
 int wasTurning = 0;
 
