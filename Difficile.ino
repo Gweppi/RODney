@@ -7,7 +7,7 @@ AF_DCMotor motor3(3, MOTOR12_64KHZ);
 AF_DCMotor motor4(4, MOTOR12_64KHZ);
 
 NewPing sonarRight (12, 13, 1000);
-NewPing sonarLeft (7, 8, 1000);
+NewPing sonarLeft (9, 10, 1000);
 
 int wasTurning = 0;
 
@@ -24,7 +24,7 @@ void loop() {
 
   int distanceRight = sonarRight.ping_cm();
   int distanceLeft = sonarLeft.ping_cm();
-  if (distanceRight == 0 || distanceLeft == 0) {
+  if (distanceRight == 0) {
     if (wasTurning == 1) {
       turnLeft();
       delay(2000);
@@ -32,11 +32,11 @@ void loop() {
     }
     
     Serial.println("DRIVE 0");
-    Serial.println(distanceRight);
+    Serial.println(distanceLeft);
     forward();
     setMotorSpeed(200);
     
-  } else if (distanceRight > 15 || distanceLeft > 15) {
+  } else if (distanceRight > 15) {
 
     if (wasTurning == 1) {
       turnLeft();
@@ -45,14 +45,45 @@ void loop() {
     }
     
     Serial.println("DRIVE 15");
-    Serial.println(distanceRight);
+    Serial.println(distanceLeft);
     forward();
     setMotorSpeed(200);
     
   } else {
     wasTurning = 1;
     Serial.println("TURN");
-    Serial.println(distanceRight);
+    Serial.println(distanceLeft);
+    turnLeft();
+  }
+  
+  if (distanceLeft == 0) {
+    if (wasTurning == 1) {
+      turnLeft();
+      delay(2000);
+      wasTurning = 0;
+    }
+    
+    Serial.println("DRIVE 15");
+    Serial.println(distanceLeft);
+    forward();
+    setMotorSpeed(200);
+  } else if (distanceLeft > 15) {
+
+    if (wasTurning == 1) {
+      turnLeft();
+      delay(2000);
+      wasTurning = 0;
+    }
+    
+    Serial.println("DRIVE 15");
+    Serial.println(distanceLeft);
+    forward();
+    setMotorSpeed(200);
+    
+  } else {
+    wasTurning = 1;
+    Serial.println("TURN");
+    Serial.println(distanceLeft);
     turnLeft();
   }
 
